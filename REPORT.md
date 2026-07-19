@@ -1,11 +1,5 @@
 # Secure Coding 과제 보고서 — Tiny Second-hand Shopping Platform
 
-> ⚠️ 이 문서는 초안입니다. 제출 전 아래 항목을 직접 채워주세요.
-> - 이름 / 전화번호 뒷자리 / 반
-> - GitHub repository 링크 (public)
-> - 실제로 실행/테스트해본 스크린샷(선택)
-> - 본인의 언어로 다듬은 서술(특히 3장 "느낀 점"류 문장은 자유 서술 권장)
-
 이름: `조원재`
 반: `36반`
 GitHub: `https://github.com/oneJaep/secure-coding`
@@ -14,7 +8,7 @@ GitHub: `https://github.com/oneJaep/secure-coding`
 
 ## 1. 개요
 
-WhiteHat School Secure Coding 과제로, "중고거래가 가능한 플랫폼(Tiny Second-hand Shopping Platform)"을
+"중고거래가 가능한 플랫폼(Tiny Second-hand Shopping Platform)"을
 Flask + Flask-SocketIO + SQLAlchemy로 구현했다. 시작 코드(`app.py` 초기 버전)는 회원가입/로그인/상품
 등록·조회·상세/전체 채팅/신고 정도만 구현되어 있었고, 보안 요소는 전혀 적용되어 있지 않았다(비밀번호
 평문 저장, CSRF 없음, 세션 설정 없음 등). 본 보고서는 요구사항 분석부터 구현, 체크리스트 기반 테스트,
