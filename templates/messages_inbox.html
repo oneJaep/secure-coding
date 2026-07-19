@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}쪽지함{% endblock %}
+{% block content %}
+<h2>쪽지함</h2>
+<ul>
+  {% for partner in partners %}
+    <li><a href="{{ url_for('messages_room', user_id=partner.id) }}">{{ partner.username }}</a></li>
+  {% else %}
+    <li>대화 내역이 없습니다. <a href="{{ url_for('dashboard') }}">상품을 둘러보고 판매자에게 쪽지를 보내보세요.</a></li>
+  {% endfor %}
+</ul>
+{% endblock %}

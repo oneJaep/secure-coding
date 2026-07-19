@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}관리자 대시보드{% endblock %}
+{% block content %}
+<h2>관리자 대시보드</h2>
+<div class="tabs">
+  <a class="active" href="{{ url_for('admin_dashboard') }}">개요</a>
+  <a href="{{ url_for('admin_users') }}">유저 관리</a>
+  <a href="{{ url_for('admin_products') }}">상품 관리</a>
+  <a href="{{ url_for('admin_reports') }}">신고 관리</a>
+</div>
+<ul>
+  <li>전체 유저: {{ stats.users }}</li>
+  <li>정지된 유저: {{ stats.suspended_users }}</li>
+  <li>전체 상품: {{ stats.products }}</li>
+  <li>차단된 상품: {{ stats.blocked_products }}</li>
+  <li>전체 신고: {{ stats.reports }}</li>
+</ul>
+{% endblock %}

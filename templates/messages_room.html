@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}{{ other.username }}님과의 대화{% endblock %}
+{% block content %}
+<h2>{{ other.username }}님과의 대화</h2>
+<div id="dm-app" data-my-id="{{ current_user.id }}" data-other-id="{{ other.id }}">
+  <ul id="dm-messages">
+    {% for m in history %}
+      <li>{{ '나' if m.sender_id == current_user.id else other.username }}: {{ m.content }}</li>
+    {% endfor %}
+  </ul>
+  <input id="dm_input" type="text" maxlength="300" placeholder="메시지를 입력하세요 (최대 300자)">
+  <button id="dm_send" type="button">전송</button>
+</div>
+{% endblock %}
+{% block scripts %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+<script src="{{ url_for('static', filename='js/dm_chat.js') }}"></script>
+{% endblock %}

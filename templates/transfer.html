@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}송금{% endblock %}
+{% block content %}
+<h2>송금</h2>
+<p>내 잔액: {{ '{:,}'.format(user.balance) }}원</p>
+<form method="post">
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+  받는 사람 (사용자명): <input type="text" name="target_username" maxlength="20" required><br>
+  금액 (원): <input type="number" name="amount" min="1" max="100000000" required><br>
+  현재 비밀번호 (재인증): <input type="password" name="current_password" required><br>
+  <button type="submit">송금하기</button>
+</form>
+
+<h3>최근 거래내역</h3>
+<ul>
+  {% for tx in history %}
+    <li>
+      {% if tx.sender_id == user.id %}
+        {{ tx.receiver.username if tx.receiver else '알 수 없음' }}님에게 {{ '{:,}'.format(tx.amount) }}원 송금
+      {% else %}
+        {{ tx.sender.username if tx.sender else '알 수 없음' }}님에게서 {{ '{:,}'.format(tx.amount) }}원 수신
+      {% endif %}
+      ({{ tx.created_at.strftime('%Y-%m-%d %H:%M') }})
+    </li>
+  {% else %}
+    <li>거래내역이 없습니다.</li>
+  {% endfor %}
+</ul>
+{% endblock %}

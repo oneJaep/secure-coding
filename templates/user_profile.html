@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}{{ profile_user.username }}{% endblock %}
+{% block content %}
+<h2>{{ profile_user.username }}</h2>
+<p>{{ profile_user.bio or '소개글이 없습니다.' }}</p>
+{% if profile_user.id != current_user.id %}
+<p>
+  <a href="{{ url_for('messages_room', user_id=profile_user.id) }}">쪽지 보내기</a>
+  ·
+  <a href="{{ url_for('report', target_type='user', target_id=profile_user.id) }}">신고하기</a>
+</p>
+{% endif %}
+<h3>등록한 상품</h3>
+<ul>
+  {% for product in products %}
+    <li><a href="{{ url_for('view_product', product_id=product.id) }}">{{ product.title }}</a> - {{ '{:,}'.format(product.price) }}원</li>
+  {% else %}
+    <li>등록한 상품이 없습니다.</li>
+  {% endfor %}
+</ul>
+{% endblock %}

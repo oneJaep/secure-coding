@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block title %}유저 관리{% endblock %}
+{% block content %}
+<h2>유저 관리</h2>
+<div class="tabs">
+  <a href="{{ url_for('admin_dashboard') }}">개요</a>
+  <a class="active" href="{{ url_for('admin_users') }}">유저 관리</a>
+  <a href="{{ url_for('admin_products') }}">상품 관리</a>
+  <a href="{{ url_for('admin_reports') }}">신고 관리</a>
+</div>
+<table>
+  <tr><th>사용자명</th><th>상태</th><th>관리자</th><th>잔액</th><th>관리</th></tr>
+  {% for u in users %}
+  <tr>
+    <td><a href="{{ url_for('user_profile', user_id=u.id) }}">{{ u.username }}</a></td>
+    <td><span class="badge {{ 'blocked' if not u.is_active else 'active' }}">{{ '정지됨' if not u.is_active else '정상' }}</span></td>
+    <td>{{ '예' if u.is_admin else '아니오' }}</td>
+    <td>{{ '{:,}'.format(u.balance) }}원</td>
+    <td class="action-links">
+      {% if u.id != current_user.id %}
+        {% if u.is_active %}
+        <form class="inline-form" method="post" action="{{ url_for('admin_ban_user', user_id=u.id) }}">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+          <button type="submit" class="danger">정지</button>
+        </form>
+        {% else %}
+        <form class="inline-form" method="post" action="{{ url_for('admin_unban_user', user_id=u.id) }}">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+          <button type="submit">정지 해제</button>
+        </form>
+        {% endif %}
+        <form class="inline-form" method="post" action="{{ url_for('admin_toggle_admin', user_id=u.id) }}">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+          <button type="submit" class="secondary">{{ '관리자 해제' if u.is_admin else '관리자 지정' }}</button>
+        </form>
+      {% else %}
+        (본인)
+      {% endif %}
+    </td>
+  </tr>
+  {% endfor %}
+</table>
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}신고 관리{% endblock %}
+{% block content %}
+<h2>신고 관리</h2>
+<div class="tabs">
+  <a href="{{ url_for('admin_dashboard') }}">개요</a>
+  <a href="{{ url_for('admin_users') }}">유저 관리</a>
+  <a href="{{ url_for('admin_products') }}">상품 관리</a>
+  <a class="active" href="{{ url_for('admin_reports') }}">신고 관리</a>
+</div>
+<table>
+  <tr><th>대상 유형</th><th>대상</th><th>사유</th><th>신고일시</th></tr>
+  {% for row in rows %}
+  <tr>
+    <td>{{ '상품' if row.report.target_type == 'product' else '사용자' }}</td>
+    <td>{{ row.target_label }}</td>
+    <td>{{ row.report.reason }}</td>
+    <td>{{ row.report.created_at.strftime('%Y-%m-%d %H:%M') }}</td>
+  </tr>
+  {% else %}
+  <tr><td colspan="4">신고 내역이 없습니다.</td></tr>
+  {% endfor %}
+</table>
+{% endblock %}
